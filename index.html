@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>دليلك في رمضان - صدقة جارية</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Cairo & Amiri -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        serif: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        ramadan: {
+                            dark: '#064e3b',
+                            primary: '#059669',
+                            light: '#d1fae5',
+                            gold: '#fbbf24',
+                            goldDark: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #059669; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-800 dark:text-slate-100 antialiased flex flex-col min-h-screen dark:bg-slate-900 transition-colors duration-300">
+
+    <!-- Header Section -->
+    <header class="bg-ramadan-dark text-white shadow-lg relative overflow-hidden pb-6">
+        <div class="islamic-pattern absolute inset-0 z-0"></div>
+        
+        <!-- Top Controls -->
+        <div class="absolute top-4 left-4 flex gap-2 z-30">
+            <div id="sync-status" class="w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center shadow-sm transition-colors" title="جاري الاتصال بالسحابة...">
+                <i class="fa-solid fa-cloud"></i>
+            </div>
+            <button onclick="window.toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white/30 transition-colors shadow-sm focus:outline-none">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
+            <button onclick="window.toggleFullScreen()" class="w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white/30 transition-colors shadow-sm focus:outline-none">
+                <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+            </button>
+        </div>
+
+        <div class="container mx-auto px-4 pt-10 pb-4 relative z-10 text-center">
+            <div class="inline-block mb-3">
+                <i class="fa-solid fa-moon text-ramadan-gold text-4xl animate-pulse"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold font-serif mb-2 tracking-wide text-white">دليلك في رمضان</h1>
+            <p class="text-ramadan-gold text-sm md:text-base mb-6 opacity-90 font-light tracking-widest border-b border-ramadan-primary inline-block pb-1">صـدقـة جـاريـة</p>
+            
+            <!-- Zakat Banner -->
+            <div class="max-w-xl mx-auto bg-white/10 backdrop-blur-sm border border-ramadan-gold/50 rounded-lg p-3 md:p-4 shadow-inner flex items-center justify-center gap-3 mt-4">
+                <i class="fa-solid fa-sack-dollar text-ramadan-gold text-2xl"></i>
+                <p class="text-sm md:text-base font-semibold text-white">
+                    زكاة الفطر هذا العام تبعاً لدار الإفتاء <span class="text-ramadan-gold font-bold text-lg mx-1">٣٥</span> جنيهاً.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 -mt-6 relative z-20 pb-24">
+        
+        <!-- Action Bar -->
+        <div class="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-xl shadow-md p-4 mb-8 gap-4 border border-slate-100 dark:border-slate-700 transition-colors duration-300">
+            <div class="text-center sm:text-right">
+                <h2 class="text-xl font-bold text-ramadan-dark dark:text-ramadan-light">حصاد اليوم</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400">تابع عباداتك واجمع حسناتك</p>
+            </div>
+            <div class="flex gap-3 w-full sm:w-auto">
+                <button onclick="window.requestResetAll()" class="flex-1 sm:flex-none bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-400 px-4 py-2 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-800 focus:outline-none">
+                    <i class="fa-solid fa-rotate-right"></i> تصفير
+                </button>
+                <button onclick="window.openReportModal()" class="flex-1 sm:flex-none bg-ramadan-primary hover:bg-ramadan-dark text-white px-6 py-2 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2 focus:outline-none">
+                    <i class="fa-solid fa-chart-pie"></i> التقرير
+                </button>
+            </div>
+        </div>
+
+        <!-- Ibadat Grid -->
+        <div id="ibadat-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards injected via JS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center mt-auto pb-28 md:pb-6">
+        <p class="text-sm">تقبل الله منا ومنكم صالح الأعمال ❤️</p>
+        <p class="text-xs mt-2 opacity-50">تم التصميم ليكون صدقة جارية لكل مسلم</p>
+    </footer>
+
+    <!-- Floating Sebha Button (Updated to be pill-shaped with text) -->
+    <button onclick="window.openSebhaModal()" class="fixed bottom-6 right-1/2 translate-x-1/2 md:translate-x-0 md:right-6 px-6 py-4 bg-gradient-to-r from-ramadan-primary to-ramadan-dark text-white rounded-full shadow-2xl flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all z-40 focus:outline-none border-2 border-white/20">
+        <i class="fa-solid fa-hand-holding-praying text-2xl"></i>
+        <span class="font-bold text-lg whitespace-nowrap">اضغط للتسبيح</span>
+    </button>
+
+    <!-- Sebha Modal -->
+    <div id="sebhaModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl w-full max-w-sm flex flex-col transform scale-95 transition-all duration-300" id="sebhaModalContent">
+            <div class="flex justify-between items-center p-5 border-b border-slate-100 dark:border-slate-700">
+                <h2 class="text-xl font-bold text-ramadan-dark dark:text-ramadan-light flex items-center gap-2">
+                    <i class="fa-solid fa-ring"></i> المسبحة الإلكترونية
+                </h2>
+                <button onclick="window.closeSebhaModal()" class="text-slate-400 hover:text-rose-500 transition-colors focus:outline-none">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-8 flex flex-col items-center justify-center gap-8">
+                <div class="text-center">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">عدد التسبيحات</p>
+                    <div id="sebha-display" class="text-6xl font-bold text-slate-800 dark:text-white font-serif tracking-wider">0</div>
+                </div>
+                
+                <!-- Big Tap Button inside the modal -->
+                <button onclick="window.incrementSebha()" class="w-44 h-44 rounded-full bg-gradient-to-br from-ramadan-primary to-ramadan-dark text-white shadow-[0_10px_40px_-10px_rgba(5,150,105,0.7)] flex flex-col items-center justify-center active:scale-90 transition-all duration-200 touch-manipulation focus:outline-none select-none border-4 border-white/10">
+                    <i class="fa-solid fa-fingerprint text-5xl opacity-90 mb-2"></i>
+                    <span class="font-bold text-lg tracking-wide shadow-sm">سبّح</span>
+                </button>
+                
+                <div class="flex gap-4 w-full mt-2">
+                    <button onclick="window.requestResetSebha()" class="flex-1 py-3 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors flex justify-center items-center gap-2 focus:outline-none">
+                        <i class="fa-solid fa-arrow-rotate-left"></i> تصفير
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300" id="reportModalContent">
+            <div class="bg-ramadan-dark text-white p-5 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-clipboard-check text-ramadan-gold text-2xl"></i>
+                    <h2 class="text-2xl font-bold">تقرير الطاعات</h2>
+                </div>
+                <button onclick="window.closeReportModal()" class="text-white/70 hover:text-white transition-colors focus:outline-none">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-grow bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+                <div class="text-center mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">إجمالي ما قدمته من طاعات</h3>
+                    <div class="text-4xl font-bold text-ramadan-primary" id="total-deeds-count">0</div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" id="motivation-message">ابدأ يومك بذكر الله</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <ul id="report-list" class="divide-y divide-slate-100 dark:divide-slate-700">
+                        <!-- Items injected here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700 rounded-b-2xl text-center">
+                <button onclick="window.closeReportModal()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2 px-8 rounded-lg transition-colors focus:outline-none">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-[60] flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-xs p-6 transform scale-95 transition-all duration-300 text-center" id="confirmModalContent">
+            <div class="w-16 h-16 bg-rose-100 dark:bg-rose-900/30 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2" id="confirmMessage">هل أنت متأكد؟</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">لا يمكن التراجع عن هذه الخطوة.</p>
+            
+            <div class="flex gap-3">
+                <button onclick="window.executeConfirm()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white py-2.5 rounded-xl font-bold transition-colors shadow-sm focus:outline-none">نعم، متأكد</button>
+                <button onclick="window.closeConfirmModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 py-2.5 rounded-xl font-bold transition-colors focus:outline-none">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-full shadow-lg font-semibold text-sm transition-all duration-300 translate-y-20 opacity-0 z-[70] flex items-center gap-2">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="toastMessage">رسالة التنبيه هنا</span>
+    </div>
+
+    <!-- JavaScript Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Application State
+        let state = {};
+        let sebhaCount = 0;
+        let activeConfirmAction = null;
+
+        const ibadatList = [
+            { id: 'quran', title: 'قراءة القرآن', unit: 'صفحة', icon: 'fa-book-quran', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+            { id: 'dhikr', title: 'ذكر الله', unit: 'مرة', icon: 'fa-hands-praying', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-50 dark:bg-teal-900/20' },
+            { id: 'salawat', title: 'الصلاة على النبي ﷺ', unit: 'مرة', icon: 'fa-heart', color: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-50 dark:bg-rose-900/20' },
+            { id: 'sadaqah', title: 'الصدقة', unit: 'مرة', icon: 'fa-hand-holding-dollar', color: 'text-amber-500 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+            { id: 'rahim', title: 'صلة الرحم', unit: 'شخص', icon: 'fa-users', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+            { id: 'itaam', title: 'إطعام الطعام', unit: 'وجبة', icon: 'fa-bowl-food', color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+            { id: 'tasamuh', title: 'التسامح والعفو', unit: 'موقف', icon: 'fa-handshake', color: 'text-indigo-500 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+            { id: 'fiqh', title: 'التفقه في الدين', unit: 'درس', icon: 'fa-book-open', color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+            { id: 'qiyam', title: 'قيام الليل', unit: 'ركعة', icon: 'fa-moon', color: 'text-indigo-800 dark:text-indigo-300', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+            { id: 'dua', title: 'الدعاء', unit: 'دعوة', icon: 'fa-hand-holding-heart', color: 'text-pink-600 dark:text-pink-400', bg: 'bg-pink-50 dark:bg-pink-900/20' },
+        ];
+
+        // Firebase Setup
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        let db, currentUser = null, appId = 'default-app-id';
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            db = getFirestore(app);
+            if(typeof __app_id !== 'undefined') appId = __app_id;
+
+            const initAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Auth failed:", error);
+                    updateSyncUI('error');
+                }
+            };
+            
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) {
+                    updateSyncUI('idle');
+                    const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'ramadan_progress', 'daily_stats');
+                    
+                    onSnapshot(docRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+                            if (data.state) {
+                                state = { ...state, ...data.state };
+                                updateAllCountersUI();
+                            }
+                            if (data.sebhaCount !== undefined) {
+                                sebhaCount = data.sebhaCount;
+                                const display = document.getElementById('sebha-display');
+                                if(display) display.textContent = sebhaCount;
+                            }
+                        }
+                    }, (error) => {
+                        console.error("Fetch error:", error);
+                        updateSyncUI('error');
+                    });
+                }
+            });
+
+            initAuth();
+        } catch(e) {
+            console.error("Firebase not initialized", e);
+            updateSyncUI('error');
+        }
+
+        // Core Functions
+        function initApp() {
+            ibadatList.forEach(item => { state[item.id] = 0; });
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('ibadat-grid');
+            grid.innerHTML = '';
+            
+            ibadatList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-5 flex flex-col items-center text-center transition-all duration-300 card-hover relative overflow-hidden group`;
+                card.innerHTML = `
+                    <div class="w-16 h-16 rounded-full ${item.bg} flex items-center justify-center mb-4 relative z-10 shadow-inner">
+                        <i class="fa-solid ${item.icon} text-2xl ${item.color}"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-1 relative z-10">${item.title}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 relative z-10">العدد بـ (${item.unit})</p>
+                    
+                    <div class="flex items-center justify-center gap-4 w-full relative z-10 bg-slate-50 dark:bg-slate-900 p-2 rounded-xl border border-slate-100 dark:border-slate-700 transition-colors">
+                        <button onclick="window.decrement('${item.id}')" class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 shadow hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-rose-500 flex items-center justify-center transition-colors active:scale-95 text-xl font-bold select-none focus:outline-none touch-manipulation">
+                            -
+                        </button>
+                        <div class="flex-1">
+                            <span id="counter-${item.id}" class="text-3xl font-bold text-ramadan-dark dark:text-ramadan-light block leading-none select-none">${state[item.id]}</span>
+                        </div>
+                        <button onclick="window.increment('${item.id}')" class="w-10 h-10 rounded-lg bg-ramadan-primary text-white shadow hover:bg-ramadan-dark flex items-center justify-center transition-colors active:scale-95 text-xl font-bold select-none focus:outline-none touch-manipulation">
+                            +
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateAllCountersUI() {
+            ibadatList.forEach(item => {
+                const el = document.getElementById(`counter-${item.id}`);
+                if(el) el.textContent = state[item.id] || 0;
+            });
+        }
+
+        function increment(id) {
+            state[id] = (state[id] || 0) + 1;
+            document.getElementById(`counter-${id}`).textContent = state[id];
+            animateCounter(`counter-${id}`);
+            saveProgressToCloud();
+        }
+
+        function decrement(id) {
+            if (state[id] > 0) {
+                state[id]--;
+                document.getElementById(`counter-${id}`).textContent = state[id];
+                animateCounter(`counter-${id}`);
+                saveProgressToCloud();
+            }
+        }
+
+        function animateCounter(elementId) {
+            const el = document.getElementById(elementId);
+            if(!el) return;
+            el.classList.add('scale-125', 'text-ramadan-primary');
+            setTimeout(() => el.classList.remove('scale-125', 'text-ramadan-primary'), 150);
+        }
+
+        async function saveProgressToCloud() {
+            if (!currentUser || !db) return;
+            updateSyncUI('saving');
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'ramadan_progress', 'daily_stats');
+                await setDoc(docRef, { state, sebhaCount }, { merge: true });
+                updateSyncUI('saved');
+            } catch (e) {
+                updateSyncUI('error');
+            }
+        }
+
+        function updateSyncUI(status) {
+            const syncIcon = document.getElementById('sync-status');
+            if(!syncIcon) return;
+            if (status === 'saving') {
+                syncIcon.innerHTML = '<i class="fa-solid fa-cloud-arrow-up animate-pulse text-ramadan-light"></i>';
+            } else if (status === 'saved') {
+                syncIcon.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
+                setTimeout(() => updateSyncUI('idle'), 2000);
+            } else if (status === 'idle') {
+                syncIcon.innerHTML = '<i class="fa-solid fa-cloud text-white"></i>';
+            } else if (status === 'error') {
+                syncIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-400"></i>';
+            }
+        }
+
+        // Custom Confirm Modal Logic
+        function openConfirmModal(message, actionCallback) {
+            document.getElementById('confirmMessage').textContent = message;
+            activeConfirmAction = actionCallback;
+            const modal = document.getElementById('confirmModal');
+            const content = document.getElementById('confirmModalContent');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirmModal');
+            const content = document.getElementById('confirmModalContent');
+            activeConfirmAction = null;
+            
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function executeConfirm() {
+            if (activeConfirmAction) activeConfirmAction();
+            closeConfirmModal();
+        }
+
+        // Resets
+        function requestResetAll() {
+            openConfirmModal("هل أنت متأكد من تصفير جميع العدادات وبدء حساب جديد؟", () => {
+                ibadatList.forEach(item => {
+                    state[item.id] = 0;
+                    const el = document.getElementById(`counter-${item.id}`);
+                    if(el) el.textContent = '0';
+                });
+                saveProgressToCloud();
+                showToast("تم تصفير جميع العدادات بنجاح");
+            });
+        }
+
+        function requestResetSebha() {
+            if (sebhaCount > 0) {
+                openConfirmModal("هل تود تصفير المسبحة؟", () => {
+                    sebhaCount = 0;
+                    document.getElementById('sebha-display').textContent = sebhaCount;
+                    saveProgressToCloud();
+                });
+            }
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Sebha Logic
+        function incrementSebha() {
+            sebhaCount++;
+            document.getElementById('sebha-display').textContent = sebhaCount;
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(50);
+            }
+            saveProgressToCloud();
+        }
+
+        // Modals Management
+        function openModal(id, contentId) {
+            const m = document.getElementById(id);
+            const c = document.getElementById(contentId);
+            if(id === 'reportModal') generateReport();
+            
+            m.classList.remove('hidden');
+            setTimeout(() => {
+                m.classList.remove('opacity-0');
+                c.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal(id, contentId) {
+            const m = document.getElementById(id);
+            const c = document.getElementById(contentId);
+            m.classList.add('opacity-0');
+            c.classList.add('scale-95');
+            setTimeout(() => m.classList.add('hidden'), 300);
+        }
+
+        // Report Generation
+        function generateReport() {
+            const listElement = document.getElementById('report-list');
+            const totalElement = document.getElementById('total-deeds-count');
+            const motivationElement = document.getElementById('motivation-message');
+            
+            listElement.innerHTML = '';
+            let totalDeeds = 0;
+            let activeItems = 0;
+
+            ibadatList.forEach(item => {
+                const count = state[item.id];
+                if (count > 0) {
+                    totalDeeds += count;
+                    activeItems++;
+                    const li = document.createElement('li');
+                    li.className = 'flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors';
+                    li.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full ${item.bg} flex items-center justify-center">
+                                <i class="fa-solid ${item.icon} ${item.color}"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100">${item.title}</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">${item.unit}</p>
+                            </div>
+                        </div>
+                        <div class="text-xl font-bold text-ramadan-dark dark:text-ramadan-light bg-slate-100 dark:bg-slate-700 px-4 py-1 rounded-full border border-slate-200 dark:border-slate-600">
+                            ${count}
+                        </div>
+                    `;
+                    listElement.appendChild(li);
+                }
+            });
+
+            totalElement.textContent = totalDeeds;
+
+            if (activeItems === 0) {
+                listElement.innerHTML = `
+                    <div class="p-8 text-center text-slate-500 dark:text-slate-400 flex flex-col items-center">
+                        <i class="fa-solid fa-folder-open text-4xl mb-3 opacity-50"></i>
+                        <p>لم تقم بتسجيل أي طاعات بعد.</p>
+                        <p class="text-sm mt-1">ابدأ الآن، فكل عمل مهما كان صغيراً عند الله عظيم.</p>
+                    </div>
+                `;
+                motivationElement.textContent = "بادر بالأعمال الصالحة";
+            } else {
+                if (totalDeeds < 10) motivationElement.textContent = "بداية موفقة، استمر في جمع الحسنات!";
+                else if (totalDeeds < 50) motivationElement.textContent = "ما شاء الله، إنجاز رائع ومبارك!";
+                else if (totalDeeds < 100) motivationElement.textContent = "همة عالية! تقبل الله منك وضاعف لك الأجر.";
+                else motivationElement.textContent = "تبارك الرحمن! سجلٌ حافل بالطاعات، هنيئاً لك.";
+            }
+        }
+
+        // Full Screen Toggle with fallback
+        function toggleFullScreen() {
+            const icon = document.getElementById('fullscreen-icon');
+            const doc = window.document;
+            const docEl = doc.documentElement;
+
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).then(() => {
+                        icon.classList.replace('fa-expand', 'fa-compress');
+                    }).catch(err => {
+                        showToast("عذراً، المتصفح الحالي لا يسمح بتكبير الشاشة.");
+                    });
+                } else {
+                    showToast("خاصية تكبير الشاشة غير مدعومة في جهازك.");
+                }
+            } else {
+                if (cancelFullScreen) {
+                    cancelFullScreen.call(doc).then(() => {
+                        icon.classList.replace('fa-compress', 'fa-expand');
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                }
+            }
+        }
+
+        // Dark Mode
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                icon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        // Exposing functions to global scope for HTML event listeners
+        window.increment = increment;
+        window.decrement = decrement;
+        window.requestResetAll = requestResetAll;
+        window.requestResetSebha = requestResetSebha;
+        window.incrementSebha = incrementSebha;
+        window.toggleDarkMode = toggleDarkMode;
+        window.toggleFullScreen = toggleFullScreen;
+        window.openReportModal = () => openModal('reportModal', 'reportModalContent');
+        window.closeReportModal = () => closeModal('reportModal', 'reportModalContent');
+        window.openSebhaModal = () => openModal('sebhaModal', 'sebhaModalContent');
+        window.closeSebhaModal = () => closeModal('sebhaModal', 'sebhaModalContent');
+        window.closeConfirmModal = closeConfirmModal;
+        window.executeConfirm = executeConfirm;
+
+        // Init
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            // Dark Mode check
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        // Close Modals on Outside Click
+        ['reportModal', 'sebhaModal', 'confirmModal'].forEach(id => {
+            document.getElementById(id).addEventListener('click', (e) => {
+                if (e.target.id === id) closeModal(id, id + 'Content');
+            });
+        });
+
+    </script>
+</body>
+</html>
